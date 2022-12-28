@@ -5,15 +5,25 @@ using UnityEngine;
 
 public class RePosition : MonoBehaviour
 {
-    void OnTriggerExit2D(Collider2D collision)
+    readonly string areaTag = "Area";
+    private void OnTriggerExit2D(Collider2D collision)
     {
         // OnTriggerExit2D의 매개변수 상대방 콜라이더의 태그를 조건으로
-        if (!collision.CompareTag("Area"))
+        if (!collision.CompareTag(areaTag))
             return; // Tag가 Area가 아니면 return해줌
         
         // 거리를 구하기 위해 플레이어 위치와 타일맵 위치를 미리 저장
         Vector3 playerPos = GameManager.instance.transform.position;
         Vector3 myPos = transform.position;
+        
+        // float dirX = playerPos.x - myPos.x;
+        // float dirY = playerPos.y - myPos.y;
+        //
+        // float diffX = Mathf.Abs(dirX);
+        // float diffY = Mathf.Abs(dirY);
+        //
+        // dirX = dirX > 0 ? 1 : -1;
+        // dirY = dirY > 0 ? 1 : -1;
         
         // 플레이어 위치 - 타일맵 위치 계산으로 거리 구하기
         // 무조건 + 값이여야 하기 때문에 Mathf.Abs : 절대값 함수 사용
