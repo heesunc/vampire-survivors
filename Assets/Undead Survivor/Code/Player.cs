@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
+        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
     }
 
