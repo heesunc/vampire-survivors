@@ -1,9 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class RePosition : MonoBehaviour
 {
+    private Collider2D coll;
+    // Collider2D는 써클이든 뭐든 다 가지고 있음
+
+    private void Awake()
+    {
+        coll = GetComponent<Collider2D>();
+    }
+
     void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Area"))
@@ -36,7 +46,10 @@ public class RePosition : MonoBehaviour
                 }
                 break;
             case "Enemy":
-
+                if (coll.enabled)
+                {
+                    transform.Translate(playerDir * 20 + new Vector3(UnityEngine.Random.Range(-3f, 3f), UnityEngine.Random.Range(-3f, 3f),0f));
+                }
                 break;
         }
     }
