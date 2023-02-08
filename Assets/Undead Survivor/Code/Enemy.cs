@@ -7,19 +7,25 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed;
+    public float health;
+    public float maxHealth;
     // 속도, 목표, 생존여부를 위한 변수 선언
     public Rigidbody2D target;
+    public RuntimeAnimatorController[] animCon;
+    
     
     // 몬스터의 생존여부
-    private bool isLive = true;
+    private bool isLive;
 
     private Rigidbody2D rigid;
+    private Animator anim;
     private SpriteRenderer spriter;
     
     void Awake()
     {
         // 초기화
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         spriter = GetComponent<SpriteRenderer>();
     }
 
@@ -48,5 +54,16 @@ public class Enemy : MonoBehaviour
     void OnEnable()
     {
         target = GameManager.instance.player.GetComponent<Rigidbody2D>();
+        isLive = true;
+        health = maxHealth;
+    }
+
+    public void Init(SpawnData data)
+    {
+        // 매개변수의 속성을 몬스터 속성 변경에 활용
+        anim.runtimeAnimatorController = animCon[data.spriteType];
+        speed = data.speed;
+        maxHealth = data.health;
+        health = data.health;
     }
 }
